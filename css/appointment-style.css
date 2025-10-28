@@ -1,0 +1,436 @@
+/* Overlay */
+#appointment-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 999;
+  transition: opacity 0.3s ease;
+}
+
+/* Popup Container */
+#appointment-popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 500px;
+  max-height: 600px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+
+/* Close Button */
+#appointment-popup .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Form Styles */
+#appointment-popup h2 {
+  margin-top: 0;
+  font-size: 24px;
+  text-align: center;
+}
+
+.time-chip {
+  padding: 10px;
+  border-radius: 5px;
+  background: #f0f0f0;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.time-chip.selected {
+  background: #007bff;
+  color: #fff;
+}
+
+.time-chip:hover {
+  background: #007bff;
+  color: #fff;
+}
+
+/* Styles for the appointment time container */
+#appointment-time-container {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: #f9f9f9;
+  overflow: auto;
+}
+
+.appointments-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.appointments-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+/* Starting from here */
+
+.parent-container {
+  display: flex;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  align-items: stretch;
+}
+
+#book-appointment {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+}
+
+/* Inline Appointment Form Container - Full Width/Height Design */
+.appointment-inline {
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+  border: none;
+  width: 100%;
+  height: 100%;
+  min-height: auto;
+  max-height: none;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: visible;
+  margin: 0;
+}
+
+/* Remove the background pattern */
+.appointment-inline::before {
+  display: none;
+}
+
+/* Form Heading */
+.appointment-inline h2 {
+  color: #1e293b;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 30px 0;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Form Layout - Flex for better height management */
+#appointment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+  padding: 0;
+}
+
+/* Form Field Wrappers */
+.form-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Labels - More Prominent */
+#appointment-form label {
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Input Fields and Select - Clean Design */
+#appointment-form input[type="text"],
+#appointment-form select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 16px;
+  background: #ffffff;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  color: #334155;
+}
+
+#appointment-form input[type="text"]:focus,
+#appointment-form select:focus {
+  border-color: #001685;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 22, 133, 0.08);
+}
+
+#appointment-form input[type="text"]::placeholder {
+  color: #cbd5e1;
+  font-size: 15px;
+}
+
+/* Loading Message */
+#loading-message {
+  padding: 10px;
+  background: #f0f9ff;
+  border-radius: 6px;
+  color: #0369a1;
+  font-size: 14px;
+  text-align: center;
+  border: 1px solid #bae6fd;
+}
+
+/* Time Slots Container - Flexible Height */
+#appointment-time-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  height: auto;
+  min-height: 150px;
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 15px;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  margin: 0;
+}
+
+/* Custom Scrollbar */
+#appointment-time-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+#appointment-time-container::-webkit-scrollbar-track {
+  background: #e2e8f0;
+  border-radius: 4px;
+}
+
+#appointment-time-container::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 4px;
+}
+
+#appointment-time-container::-webkit-scrollbar-thumb:hover {
+  background: #001685;
+}
+
+/* Time Chip Buttons */
+.time-chip {
+  padding: 10px 12px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #475569;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+}
+
+.time-chip:hover {
+  border-color: #001685;
+  background: #eff6ff;
+  color: #001685;
+}
+
+.time-chip.selected {
+  background: #001685;
+  color: #ffffff;
+  border-color: #001685;
+  font-weight: 600;
+}
+
+.time-chip.selected::before {
+  content: "✓ ";
+  margin-right: 4px;
+  font-size: 14px;
+}
+
+/* Doctor Select Dropdown - Custom Arrow */
+#doctor {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23001685' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 20px;
+  padding-right: 40px;
+}
+
+/* Submit Button */
+#appointment-form button[type="submit"] {
+  padding: 14px 28px;
+  background: #001685;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-top: 10px;
+  box-shadow: 0 2px 8px rgba(0, 22, 133, 0.15);
+  width: 100%;
+}
+
+#appointment-form button[type="submit"]:hover {
+  background: #002ba6;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 22, 133, 0.25);
+}
+
+#appointment-form button[type="submit"]:active {
+  transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .appointment-inline {
+    padding: 0;
+  }
+
+  .appointment-inline h2 {
+    font-size: 24px;
+    margin-bottom: 25px;
+  }
+
+  #appointment-time-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    padding: 12px;
+    max-height: 180px;
+  }
+
+  .time-chip {
+    min-height: 38px;
+    font-size: 13px;
+  }
+
+  #appointment-form {
+    gap: 18px;
+  }
+
+  #appointment-form button[type="submit"] {
+    padding: 12px 24px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .appointment-inline {
+    padding: 0;
+  }
+
+  .appointment-inline h2 {
+    font-size: 22px;
+  }
+
+  #appointment-time-container {
+    grid-template-columns: 1fr;
+    max-height: 160px;
+  }
+
+  #appointment-form input[type="text"],
+  #appointment-form select {
+    padding: 10px 14px;
+    font-size: 15px;
+  }
+}
+
+/* Empty State for Time Slots */
+#appointment-time-container:empty::before {
+  content: "Select a date to view available slots";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 14px;
+  grid-column: 1 / -1;
+  height: 100%;
+}
+
+/* Disabled State */
+#appointment-form input:disabled,
+#appointment-form select:disabled {
+  background: #f8fafc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Focus Visible for Accessibility */
+#appointment-form button:focus-visible,
+.time-chip:focus-visible {
+  outline: 2px solid #001685;
+  outline-offset: 2px;
+}
+
+/* Remove animation for cleaner look */
+.appointment-inline {
+  animation: none;
+}
+
+.appointment-inline > span.close.show {
+  display: inline-block;
+  cursor: pointer;
+}
+
+#appointment-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.appointment-inline .close {
+  display: none;
+}
+
+.appointment-inline .heading {
+  display: none;
+}
+
+.appointment-inline .heading.show {
+  display: block;
+}
